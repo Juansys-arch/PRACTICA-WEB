@@ -22,7 +22,7 @@ export async function crearIncidenciaService(data, jefeCuadrillaId) {
 
     if (requiereNotificacion) {
       await notificarPorRoles({
-        roles: ["encargado_inventario", "administrador"],
+        roles: ["profesor_practica", "administrador"],
         tipo: "incidencia_critica",
         mensaje: `Se registró una incidencia ${data.prioridad} de tipo ${data.tipo}: ${data.descripcion}`,
         incidenciaId: incidencia.id,

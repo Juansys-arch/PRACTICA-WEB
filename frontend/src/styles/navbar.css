@@ -1,159 +1,158 @@
+/* ============================================
+   NAVBAR – Dark Glassmorphism
+   ============================================ */
 .navbar {
-	position: fixed;
-	width: 100%;
-	top: 0;
-	left: 0;
-	display: block;
-	background-color: #003366; /*Color de la navbar*/
-	height: 9vh;
-	z-index: 1000;
-	ul {
-		display: flex;
-		justify-content:end;
-		align-items: center;
-		padding: 0 5vw;
-		margin: 0;
-		height: 100%;
-		li {
-			display: flex;
-			align-items: center;
-			padding: 0 60px;
-			position: relative;
-			height: 100%;
-			a {
-				color: white;
-				font-size: 0.9em;
-				text-decoration: none;
-				position: relative;
-				border-bottom: transparent 3px solid;
-				transition: border-color 0.3s ease;
-				padding: 0 10px 3px 10px;
-				box-sizing: border-box;
-			}
-			:not(.active)::before {
-				content: "";
-				position: absolute;
-				bottom: 0;
-				left: 0;
-				width: 100%;
-				height: 3px;
-				background-color: #006edf;
-				transform: scaleX(0);
-				transform-origin: bottom;
-				transition: transform 0.3s ease;
-			}
-			:not(.active):hover::before {
-				animation: heartbeat 5s ease-in-out infinite;
-				transform: scaleX(1);
-			}
-			.active {
-				font-weight: bold;
-				background-color: #eef7ff;
-				color: #002651;
-				margin: 0;
-				padding-bottom: 0;
-				border: 0;
-				height: 100%;
-				line-height: 9.1vh;
-			}
-		}
-	}
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  background: rgba(10, 15, 30, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  height: 64px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.4);
 }
 
+.navbar ul {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 0 32px;
+  margin: 0;
+  height: 100%;
+  list-style: none;
+  gap: 4px;
+}
+
+.navbar ul li {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  position: relative;
+}
+
+.navbar ul li a {
+  color: #94a3b8;
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-decoration: none;
+  padding: 6px 14px;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  letter-spacing: 0.01em;
+}
+
+.navbar ul li a:hover {
+  color: #e2e8f0;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.navbar ul li a.active {
+  color: #fff;
+  background: rgba(99, 102, 241, 0.2);
+  border: 1px solid rgba(99, 102, 241, 0.35);
+  font-weight: 600;
+}
+
+/* Logo / brand */
+.navbar-brand {
+  position: absolute;
+  left: 32px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #e2e8f0;
+  font-weight: 700;
+  font-size: 1rem;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  letter-spacing: -0.01em;
+}
+
+.navbar-brand span {
+  color: #6366f1;
+}
+
+/* Hamburger */
 .hamburger {
-	display: none;
-	flex-direction: column;
-	cursor: pointer;
-	position: absolute;
-	top: 25px;
-	right: 20px;
-	z-index: 1001;
+  display: none;
+  flex-direction: column;
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  right: 20px;
+  transform: translateY(-50%);
+  z-index: 1001;
+  gap: 5px;
+  padding: 6px;
 }
 
 .hamburger .bar {
-	width: 25px;
-	height: 3px;
-	background-color: white;
-	margin: 4px 0;
+  width: 22px;
+  height: 2px;
+  background-color: #94a3b8;
+  border-radius: 2px;
+  transition: all 0.3s ease;
 }
 
 @media (max-width: 768px) {
-	.nav-menu ul {
-		display: none;
-		flex-direction: column;
-		background-color: #003366;
-		position: absolute;
-		top: 9vh;
-		left: 0;
-		width: 100%;
-		text-align: center;
-	}
+  .nav-menu ul {
+    display: none;
+    flex-direction: column;
+    background: rgba(10, 15, 30, 0.97);
+    backdrop-filter: blur(16px);
+    position: absolute;
+    top: 64px;
+    left: 0;
+    width: 100%;
+    padding: 12px 16px;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+  }
 
-	.nav-menu.activado ul {
-		display: flex;
-		background-color: #eef7ff;
-		justify-content: center;
-		padding: 0;
-	}
+  .nav-menu.activado ul {
+    display: flex;
+    gap: 4px;
+    justify-content: flex-start;
+    align-items: flex-start;
+  }
 
-	.hamburger {
-		display: flex;
-	}
+  .nav-menu.activado ul li {
+    height: auto;
+    width: 100%;
+  }
 
-	.nav-menu.activado ul li {
-		padding: 0;
-		width: 100%;
-		height: 60px;
-		a {
-			color: #003366;
-			font-weight: bold;
-			font-size: 0.9em;
-			text-decoration: none;
-			position: relative;
-			border-bottom: none;
-			transition: border-color 0.3s ease;
-			padding-left: 5px;
-			box-sizing: border-box;
-        }
-	}
+  .nav-menu.activado ul li a {
+    width: 100%;
+    padding: 10px 16px;
+  }
+
+  .hamburger { display: flex; }
 }
 
 @media (min-width: 768px) and (max-width: 1024px) {
-	.nav-menu ul {
-		display: none;
-		flex-direction: column;
-		background-color: #003366;
-		position: absolute;
-		top: 9vh;
-		left: 0;
-		width: 100%;
-		text-align: center;
-	}
-	.nav-menu.activado ul {
-		display: flex;
-		background-color: #eef7ff;
-		justify-content: center;
-		padding: 0;
-	}
+  .nav-menu ul {
+    display: none;
+    flex-direction: column;
+    background: rgba(10, 15, 30, 0.97);
+    backdrop-filter: blur(16px);
+    position: absolute;
+    top: 64px;
+    left: 0;
+    width: 100%;
+    padding: 12px 16px;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+  }
 
-	.hamburger {
-		display: flex;
-	}
+  .nav-menu.activado ul {
+    display: flex;
+    gap: 4px;
+  }
 
-	.nav-menu.activado ul li {
-		padding: 0;
-		width: 100%;
-		height: 60px;
-		a {
-			color: #003366;
-			font-weight: bold;
-			font-size: 0.9em;
-			text-decoration: none;
-			position: relative;
-			border-bottom: none;
-			transition: border-color 0.3s ease;
-			padding-left: 5px;
-			box-sizing: border-box;
-        }
-	}
+  .hamburger { display: flex; }
 }

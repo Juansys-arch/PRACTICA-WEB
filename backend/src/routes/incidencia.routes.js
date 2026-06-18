@@ -10,24 +10,25 @@ import {
 } from "../controllers/incidencia.controller.js";
 
 const router = Router();
-
 router.use(authenticateJwt);
 
+// Solo profesor_practica puede reportar incidencias
 router.post(
   "/",
-  isAuthorized(["jefe_cuadrilla"]),
+  isAuthorized(["profesor_practica", "administrador"]),
   crearIncidencia,
 );
 
+// Todos los roles autenticados pueden ver incidencias
 router.get(
   "/",
-  isAuthorized(["jefe_cuadrilla", "encargado_inventario", "administrador"]),
+  isAuthorized(["profesor_practica", "reparador", "administrador"]),
   obtenerIncidencias,
 );
 
 router.get(
   "/:id",
-  isAuthorized(["jefe_cuadrilla", "encargado_inventario", "administrador"]),
+  isAuthorized(["profesor_practica", "reparador", "administrador"]),
   obtenerIncidenciaPorId,
 );
 

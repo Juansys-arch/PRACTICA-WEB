@@ -8,78 +8,70 @@ async function createUsers() {
     const userRepository = AppDataSource.getRepository(User);
 
     const defaultUsers = [
+      // ─── Administrador del sistema ─────────────────────────────
       {
-        nombreCompleto: "Diego Alexis Salazar Jara",
+        nombreCompleto: "Administrador del Lab",
         rut: "21.308.770-3",
-        email: "administrador2024@gmail.cl",
+        email: "admin@lab.cl",
         password: "admin1234",
         rol: "administrador",
+        status: "active",
+      },
+      // ─── Profesores de práctica ────────────────────────────────
+      {
+        nombreCompleto: "Profesor Carlos Ramírez",
+        rut: "15.432.100-K",
+        email: "carlos.ramirez@lab.cl",
+        password: "practica1234",
+        rol: "profesor_practica",
+        status: "active",
       },
       {
-        nombreCompleto: "Luis Alberto Paredes Rojas",
-        rut: "19.876.543-2",
-        email: "jefe.cuadrilla2024@gmail.cl",
-        password: "jefe1234",
-        rol: "jefe_cuadrilla",
+        nombreCompleto: "Profesora Ana Muñoz",
+        rut: "16.789.234-5",
+        email: "ana.munoz@lab.cl",
+        password: "practica1234",
+        rol: "profesor_practica",
+        status: "active",
+      },
+      // ─── Reparadores (Taller / Profesor encargado de reparar) ─
+      {
+        nombreCompleto: "Prof. Técnico Jorge Soto",
+        rut: "13.210.456-7",
+        email: "jorge.soto@lab.cl",
+        password: "reparador1234",
+        rol: "reparador",
+        status: "active",
       },
       {
-        nombreCompleto: "Camila Andrea Fuentes Rivas",
-        rut: "18.654.321-0",
-        email: "encargado.inventario2024@gmail.cl",
-        password: "inventario1234",
-        rol: "encargado_inventario",
-      },
-      {
-        nombreCompleto: "Diego Sebastián Ampuero Belmar",
-        rut: "21.151.897-9",
-        email: "usuario1.2024@gmail.cl",
-        password: "user1234",
-        rol: "usuario",
-      },
-      {
-        nombreCompleto: "Alexander Benjamín Marcelo Carrasco Fuentes",
-        rut: "20.630.735-8",
-        email: "usuario2.2024@gmail.cl",
-        password: "user1234",
-        rol: "usuario",
-      },
-      {
-        nombreCompleto: "Pablo Andrés Castillo Fernández",
-        rut: "20.738.450-K",
-        email: "usuario3.2024@gmail.cl",
-        password: "user1234",
-        rol: "usuario",
-      },
-      {
-        nombreCompleto: "Felipe Andrés Henríquez Zapata",
-        rut: "20.976.635-3",
-        email: "usuario4.2024@gmail.cl",
-        password: "user1234",
-        rol: "usuario",
-      },
-      {
-        nombreCompleto: "Diego Alexis Meza Ortega",
-        rut: "21.172.447-1",
-        email: "usuario5.2024@gmail.cl",
-        password: "user1234",
-        rol: "usuario",
-      },
-      {
-        nombreCompleto: "Juan Pablo Rosas Martin",
-        rut: "20.738.415-1",
-        email: "usuario6.2024@gmail.cl",
-        password: "user1234",
-        rol: "usuario",
+        nombreCompleto: "Prof. Técnico Marcela Vega",
+        rut: "14.567.890-2",
+        email: "marcela.vega@lab.cl",
+        password: "reparador1234",
+        rol: "reparador",
+        status: "active",
       },
     ];
 
     await Promise.all(
       defaultUsers.map(async (defaultUser) => {
         const existingUser = await userRepository.findOne({
-          where: { email: defaultUser.email },
+          where: [
+            { email: defaultUser.email },
+            { rut: defaultUser.rut }
+          ],
         });
 
-        if (existingUser) return;
+        if (existingUser) {
+          // Si existe, actualizamos sus datos para que coincidan con los nuevos
+          existingUser.email = defaultUser.email;
+          existingUser.nombreCompleto = defaultUser.nombreCompleto;
+          existingUser.rol = defaultUser.rol;
+          // Actualizamos la contraseña para asegurarnos de que puedan entrar con los nuevos datos
+          existingUser.password = await encryptPassword(defaultUser.password);
+          await userRepository.save(existingUser);
+          return;
+        }
 
         await userRepository.save(
           userRepository.create({
@@ -90,7 +82,7 @@ async function createUsers() {
       }),
     );
 
-    console.log("* => Usuarios creados exitosamente");
+    console.log("* => Usuarios del laboratorio creados exitosamente");
   } catch (error) {
     console.error("Error al crear usuarios:", error);
   }

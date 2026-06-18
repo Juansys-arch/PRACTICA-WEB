@@ -9,12 +9,17 @@ import {
 
 const router = Router();
 router.use(authenticateJwt);
-router.get("/",isAuthorized(["encargado_inventario", "administrador"]),
+
+router.get(
+  "/",
+  isAuthorized(["administrador", "profesor_practica"]),
   obtenerNotificaciones
 );
- 
-router.patch("/:id/leer",isAuthorized(["encargado_inventario", "administrador"]),
+
+router.patch(
+  "/:id/leer",
+  isAuthorized(["administrador", "profesor_practica"]),
   marcarNotificacionLeida
 );
- 
+
 export default router;

@@ -1,0 +1,121 @@
+/* ============================================
+   PRÉSTAMOS – Dark Premium
+   ============================================ */
+.prestamos-page { animation: fadeIn 0.3s ease; }
+
+.prestamos-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.prestamos-header h1 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.prestamos-header h1::before {
+  content: "";
+  display: inline-block;
+  width: 4px;
+  height: 1.4em;
+  border-radius: 2px;
+  background: var(--color-success);
+}
+
+/* Stats row */
+.prestamos-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 14px;
+  margin-bottom: 24px;
+}
+
+.stat-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 16px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  transition: border-color 0.2s;
+}
+
+.stat-card:hover { border-color: var(--border-default); }
+
+.stat-card .stat-label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+}
+
+.stat-card .stat-value {
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  line-height: 1;
+}
+
+.stat-card.stat-active .stat-value  { color: var(--accent-primary); }
+.stat-card.stat-returned .stat-value { color: var(--color-success); }
+.stat-card.stat-overdue .stat-value  { color: var(--color-danger); }
+
+/* Estado badges */
+.estado-prestado   { background: rgba(99,102,241,0.15); color: #818cf8; }
+.estado-devuelto   { background: rgba(16,185,129,0.15); color: #10b981; }
+.estado-vencido    { background: rgba(239,68,68,0.15);  color: #ef4444; }
+
+.badge-estado-prestamo {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+/* Modal de 2 columnas */
+.modal-grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 16px;
+}
+
+.modal-grid-2 .full-width { grid-column: 1 / -1; }
+
+@media (max-width: 500px) {
+  .modal-grid-2 { grid-template-columns: 1fr; }
+}
+
+/* Devolver button inline */
+.btn-devolver {
+  padding: 5px 12px;
+  background: var(--color-success-bg);
+  color: var(--color-success);
+  border: 1px solid rgba(16,185,129,0.3);
+  border-radius: 6px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.btn-devolver:hover {
+  background: var(--color-success);
+  color: #fff;
+  border-color: var(--color-success);
+}

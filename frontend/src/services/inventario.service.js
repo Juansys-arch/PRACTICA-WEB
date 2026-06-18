@@ -51,38 +51,4 @@ export async function registrarMovimiento(dataMovimiento){
         return error.response.data;
     }
 }
-export async function solicitarMaterial(dataSolicitud){
-    try{
-        const response = await axios.post('/inventario/solicitudes',dataSolicitud);
-        return response.data;
-    }catch(error){
-        return error.response.data;
-    }
-}
 
-export async function getSolicitudes(){
-    try{
-        const {data} = await axios.get('/inventario/solicitudes');
-        return data.data;
-    }catch(error){
-        return error.response.data;
-    }
-}
-
-export async function getMisSolicitudes(){
-    try{
-        const {data} = await axios.get('/inventario/solicitudes/mis');
-        return data.data;
-    }catch(error){
-        return error.response.data;
-    }
-}
-
-export async function actualizarEstadoSolicitud(id, estado){
-    try{
-        const {data} = await axios.patch(`/inventario/solicitudes/${id}/estado`, { estado });
-        return data.data;
-    }catch(error){
-        return error.response.data;
-    }
-}

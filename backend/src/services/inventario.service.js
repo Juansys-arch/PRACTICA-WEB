@@ -4,7 +4,6 @@ import { AppDataSource } from "../config/configDb.js";
 import Material from "../entity/material.entity.js";
 import MovimientoInventario from "../entity/movimientoinventario.entity.js";
 import Notificacion from "../entity/notificacion.entity.js";
-import Solicitud from "../entity/solicitud.entity.js";
 import User from "../entity/user.entity.js";
 import { notificarPorRoles } from "./notificacion.service.js";
 
@@ -12,7 +11,6 @@ const materialRepository = AppDataSource.getRepository(Material);
 const movimientoRepository = AppDataSource.getRepository(MovimientoInventario);
 const notificacionRepository = AppDataSource.getRepository(Notificacion);
 const userRepository = AppDataSource.getRepository(User);
-const solicitudRepository = AppDataSource.getRepository(Solicitud);
 
 export async function crearMaterialService(data) {
   try {
@@ -148,7 +146,7 @@ export async function registrarMovimientoService(data, responsableId) {
 
     if (material.stockActual <= material.stockMinimo) {
       await notificarPorRoles({
-        roles: ["encargado_inventario", "administrador"],
+        roles: ["profesor_practica", "administrador"],
         tipo: "stock_bajo",
         mensaje: `El material "${material.nombre}" quedó con stock ${material.stockActual}. Stock mínimo: ${material.stockMinimo}.`,
         materialId: material.id,
@@ -179,107 +177,4 @@ export async function obtenerMovimientosService(materialId = null) {
     return [null, error.message];
   }
 }
-
-export async function solicitarMaterialService(data, solicitante) {
-  try {
-    const material = await materialRepository.findOne({
-      where: { id: data.materialId },
-    });
-
-    if (!material) return [null, "Material no encontrado"];
-
-    const encargadosInventario = await userRepository.find({
-      where: { rol: "encargado_inventario" },
-    });
-
-    if (!encargadosInventario.length) {
-      return [null, "No hay encargados de inventario disponibles para recibir la solicitud"];
-    }
-    // persistir solicitud
-    const solicitud = await solicitudRepository.save(
-      solicitudRepository.create({
-        materialId: material.id,
-        solicitanteId: solicitante.id,
-        cantidad: data.cantidad,
-        observacion: data.observacion ?? null,
-        ubicacion: data.ubicacion ?? null,
-        estado: "pendiente",
-      }),
-    );
-
-    // notificar encargados
-    const mensaje =
-      `Solicitud de material: ${solicitante.nombreCompleto} (${solicitante.email}) solicita ${data.cantidad} ${material.unidadMedida} de "${material.nombre}".` +
-      `${data.ubicacion ? ` Ubicación: ${data.ubicacion}.` : ""}` +
-      `${data.observacion ? ` Observacion: ${data.observacion}` : ""}`;
-
-    await Promise.all(
-      encargadosInventario.map((encargadoInventario) =>
-        notificacionRepository.save(
-          notificacionRepository.create({
-            tipo: "solicitud_material",
-            mensaje,
-            administradorId: encargadoInventario.id,
-            materialId: material.id,
-            incidenciaId: null,
-          }),
-        ),
-      ),
-    );
-
-    return [solicitud, null];
-  } catch (error) {
-    return [null, error.message];
-  }
-}
-
-export async function obtenerSolicitudesService() {
-  try {
-    const solicitudes = await solicitudRepository.find({
-      order: { createdAt: "DESC" },
-      relations: ["material", "solicitante"],
-    });
-    return [solicitudes, null];
-  } catch (error) {
-    return [null, error.message];
-  }
-}
-
-export async function obtenerSolicitudesPorSolicitanteService(solicitanteId) {
-  try {
-    const solicitudes = await solicitudRepository.find({
-      where: { solicitanteId },
-      order: { createdAt: "DESC" },
-      relations: ["material"],
-    });
-    return [solicitudes, null];
-  } catch (error) {
-    return [null, error.message];
-  }
-}
-
-export async function actualizarEstadoSolicitudService(id, nuevoEstado, encargadoId) {
-  try {
-    const solicitud = await solicitudRepository.findOne({ where: { id }, relations: ["solicitante", "material"] });
-    if (!solicitud) return [null, "Solicitud no encontrada"];
-
-    solicitud.estado = nuevoEstado;
-    await solicitudRepository.save(solicitud);
-
-    // notificar al solicitante sobre el cambio de estado
-    const mensaje = `Su solicitud #${solicitud.id} para ${solicitud.material?.nombre || ''} cambió a estado: ${nuevoEstado}`;
-    await notificacionRepository.save(
-      notificacionRepository.create({
-        tipo: "estado_solicitud",
-        mensaje,
-        administradorId: solicitud.solicitanteId,
-        materialId: solicitud.materialId,
-        incidenciaId: null,
-      }),
-    );
-
-    return [solicitud, null];
-  } catch (error) {
-    return [null, error.message];
-  }
-}
+

@@ -40,15 +40,15 @@ const Login = () => {
                     {
                         label: "Correo electrónico",
                         name: "email",
-                        placeholder: "example@gmail.cl",
+                        placeholder: "example@lab.cl",
                         fieldType: 'input',
                         type: "email",
                         required: true,
-                        minLength: 5,
+                        minLength: 10,
                         maxLength: 64,
                         errorMessageData: errorEmail,
                         validate: {
-                            emailDomain: (value) => value.endsWith('@gmail.cl') || 'El correo debe ser institucional (@gmail.cl)'
+                            emailDomain: (value) => value.endsWith('@lab.cl') || 'El correo debe ser institucional (@lab.cl)'
                         },
                         onChange: (e) => handleInputChange('email', e.target.value),
                     },

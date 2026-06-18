@@ -6,77 +6,70 @@ import Users from '@pages/Users';
 import Register from '@pages/Register';
 import Error404 from '@pages/Error404';
 import Root from '@pages/Root';
-
-import Inventario from '@pages/Inventario';
-import Incidencias from '@pages/Incidencias';
-import Notificaciones from '@components/Notificaciones';
 import GestionOperativa from '@pages/GestionOperativa';
+
 import ProtectedRoute from '@components/ProtectedRoute';
 import '@styles/styles.css';
+
+const ROLES_PRACTICA = ['administrador', 'profesor_practica'];
+const ROLES_REPARADOR = ['administrador', 'profesor_practica', 'reparador'];
+const ROLES_ADMIN = ['administrador'];
 
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <Root/>,
-    errorElement: <Error404/>,
+    element: <Root />,
+    errorElement: <Error404 />,
     children: [
       {
         path: '/home',
-        element: <Home/>
+        element: <Home />
       },
       {
         path: '/users',
         element: (
-        <ProtectedRoute allowedRoles={['administrador']}>
-          <Users />
-        </ProtectedRoute>
+          <ProtectedRoute allowedRoles={ROLES_ADMIN}>
+            <Users />
+          </ProtectedRoute>
         ),
       },
       {
-        path: '/inventario',
+        path: '/gestion-operativa',
         element: (
-          <ProtectedRoute allowedRoles={['administrador', 'encargado_inventario','jefe_cuadrilla']}>
+          <ProtectedRoute allowedRoles={ROLES_REPARADOR}>
             <GestionOperativa />
           </ProtectedRoute>
         ),
       },
+      // Alias de rutas para compatibilidad
       {
-        path:'/incidencias',
-        element:(
-          <ProtectedRoute allowedRoles={['administrador','encargado_inventario','jefe_cuadrilla']}>
-          <GestionOperativa />
+        path: '/prestamos',
+        element: (
+          <ProtectedRoute allowedRoles={ROLES_PRACTICA}>
+            <GestionOperativa defaultTab="prestamos" />
           </ProtectedRoute>
         ),
       },
       {
-        path:'/gestion-operativa',
-        element:(
-          <ProtectedRoute allowedRoles={['administrador','encargado_inventario','jefe_cuadrilla']}>
-          <GestionOperativa />
+        path: '/reparaciones',
+        element: (
+          <ProtectedRoute allowedRoles={ROLES_REPARADOR}>
+            <GestionOperativa defaultTab="reparaciones" />
           </ProtectedRoute>
         ),
       },
-      {
-        path:'/notificaciones',
-        element:(
-          <ProtectedRoute allowedRoles={['administrador','encargado_inventario']}>
-          <Notificaciones />
-          </ProtectedRoute>
-        ),
-      },
-      
     ]
   },
   {
     path: '/auth',
-    element: <Login/>
+    element: <Login />
   },
   {
     path: '/register',
-    element: <Register/>
+    element: <Register />
   }
 ])
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <RouterProvider router={router}/>
+  <RouterProvider router={router} />
 )

@@ -10,8 +10,8 @@ const NotificacionesDropdown = ({ userRole }) => {
     const sessionUser = JSON.parse(sessionStorage.getItem('usuario')) || {};
     const effectiveRole = userRole || sessionUser.rol;
 
-    // Solo cargar notificaciones si el rol tiene acceso según tus rutas del backend
-    const tieneAcceso = ['administrador', 'encargado_inventario'].includes(effectiveRole);
+    // Solo cargar notificaciones si el rol tiene acceso
+    const tieneAcceso = ['administrador', 'profesor_practica', 'reparador'].includes(effectiveRole);
 
     const cargarNotificaciones = async () => {
         if (!tieneAcceso) return;
@@ -38,30 +38,7 @@ const NotificacionesDropdown = ({ userRole }) => {
 
     if (!tieneAcceso) return null;
 
-    // Si la vista actual es la página /notificaciones, mostrar lista en página completa
-    const isPageView = typeof window !== 'undefined' && window.location.pathname === '/notificaciones';
 
-    if (isPageView) {
-        return (
-            <div style={{ padding: '20px', color: '#0b3b5a', background: 'linear-gradient(180deg, #f7fbff 0%, #eef4fa 100%)', minHeight: '100vh' }}>
-                <h2 style={{ marginTop: 0 }}>Notificaciones</h2>
-                {notificaciones.length === 0 ? (
-                    <p style={{ color: '#5b6b7c' }}>No tienes alertas pendientes.</p>
-                ) : (
-                    <ul style={{ listStyle: 'none', padding: 0 }}>
-                        {notificaciones.map(n => (
-                            <li key={n.id} style={{ marginBottom: '12px', padding: '12px', background: '#ffffff', border: '1px solid #d7e3ef', borderRadius: '10px', boxShadow: '0 6px 18px rgba(11,59,90,0.06)' }}>
-                                <div style={{ color: '#17324d' }}>{n.mensaje}</div>
-                                <div style={{ marginTop: '8px' }}>
-                                    <button onClick={() => handleMarcarLeida(n.id)} style={{ background: '#0b5ca8', color: '#fff', border: 'none', padding: '6px 10px', borderRadius: '6px', cursor: 'pointer' }}>Marcar como leída</button>
-                                </div>
-                            </li>
-                        ))}
-                    </ul>
-                )}
-            </div>
-        );
-    }
 
     return (
         <div className="notificaciones-container" style={{ position: 'relative', inlineSize: 'fit-content' }}>

@@ -97,11 +97,11 @@ export default function Incidencias() {
         <div className="incidencias-page">
             <div className="header-section">
                 <h1>Registro e Historial de Incidencias</h1>
-                <p>Módulo de supervisión operativa en terreno para: <strong>{userRole}</strong></p>
+                <p>Módulo de supervisión del laboratorio para: <strong>{userRole}</strong></p>
 
                 <div className="action-buttons">
                     {/* Restricción de Vista: Solo el jefe de cuadrilla inicia reportes según tus rutas */}
-                    {userRole === 'jefe_cuadrilla' && (
+                    {userRole === 'profesor_practica' && (
                         <button className="btn btn-danger" onClick={() => setShowModal(true)}>
                             ⚠️ Reportar Nueva Incidencia
                         </button>

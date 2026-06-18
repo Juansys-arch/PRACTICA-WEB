@@ -2,9 +2,9 @@
 import Joi from "joi";
 
 const domainEmailValidator = (value, helper) => {
-  if (!value.endsWith("@gmail.cl")) {
+  if (!value.endsWith("@lab.cl")) {
     return helper.message(
-      "El correo electrónico debe ser del dominio @gmail.cl"
+      "El correo electrónico debe ser del dominio @lab.cl"
     );
   }
   return value;
@@ -20,20 +20,20 @@ export const userQueryValidation = Joi.object({
       "number.positive": "El id debe ser un número positivo.",
     }),
   email: Joi.string()
-    .min(15)
+    .min(10)
     .max(35)
     .email()
     .messages({
       "string.empty": "El correo electrónico no puede estar vacío.",
       "string.base": "El correo electrónico debe ser de tipo string.",
-      "string.email": "El correo electrónico debe finalizar en @gmail.cl.",
+      "string.email": "El correo electrónico debe finalizar en @lab.cl.",
       "string.min":
-        "El correo electrónico debe tener como mínimo 15 caracteres.",
+        "El correo electrónico debe tener como mínimo 10 caracteres.",
       "string.max":
         "El correo electrónico debe tener como máximo 35 caracteres.",
     })
     .custom(domainEmailValidator, "Validación dominio email"),
-    rut: Joi.string()
+  rut: Joi.string()
     .min(9)
     .max(12)
     .pattern(/^(?:(?:[1-9]\d{0}|[1-2]\d{1})(\.\d{3}){2}|[1-9]\d{6}|[1-2]\d{7}|29\.999\.999|29999999)-[\dkK]$/)
@@ -67,15 +67,15 @@ export const userBodyValidation = Joi.object({
         "El nombre completo solo puede contener letras y espacios.",
     }),
   email: Joi.string()
-    .min(15)
+    .min(10)
     .max(35)
     .email()
     .messages({
       "string.empty": "El correo electrónico no puede estar vacío.",
       "string.base": "El correo electrónico debe ser de tipo string.",
-      "string.email": "El correo electrónico debe finalizar en @gmail.cl.",
+      "string.email": "El correo electrónico debe finalizar en @lab.cl.",
       "string.min":
-        "El correo electrónico debe tener como mínimo 15 caracteres.",
+        "El correo electrónico debe tener como mínimo 10 caracteres.",
       "string.max":
         "El correo electrónico debe tener como máximo 35 caracteres.",
     })
@@ -118,11 +118,11 @@ export const userBodyValidation = Joi.object({
     }),
   rol: Joi.string()
     .min(4)
-    .max(15)
+    .max(25)
     .messages({
       "string.base": "El rol debe ser de tipo string.",
       "string.min": "El rol debe tener como mínimo 4 caracteres.",
-      "string.max": "El rol debe tener como máximo 15 caracteres.",
+      "string.max": "El rol debe tener como máximo 25 caracteres.",
     }),
 })
   .or(

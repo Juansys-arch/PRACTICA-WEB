@@ -5,7 +5,7 @@ const notificacionRepository = AppDataSource.getRepository("Notificacion");
 const userRepository = AppDataSource.getRepository("User");
 
 export async function notificarPorRoles({
-  roles = ["encargado_inventario", "administrador"],
+  roles = ["profesor_practica", "administrador"],
   tipo,
   mensaje,
   incidenciaId = null,
@@ -37,7 +37,7 @@ export async function notificarPorRoles({
 export async function notificarAdministrador(datos) {
   return notificarPorRoles({
     ...datos,
-    roles: ["encargado_inventario", "administrador"],
+    roles: ["profesor_practica", "administrador"],
   });
 }
 

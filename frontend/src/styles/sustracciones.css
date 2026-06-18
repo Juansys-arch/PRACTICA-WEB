@@ -1,0 +1,110 @@
+/* ============================================
+   SUSTRACCIONES – Dark Premium
+   ============================================ */
+.sustracciones-page { animation: fadeIn 0.3s ease; }
+
+.sustracciones-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.sustracciones-header h1 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.sustracciones-header h1::before {
+  content: "";
+  display: inline-block;
+  width: 4px;
+  height: 1.4em;
+  border-radius: 2px;
+  background: var(--color-warning);
+}
+
+/* Tipo badges */
+.tipo-robo               { background: rgba(239,68,68,0.15);  color: #ef4444;  }
+.tipo-retiro_no_autorizado { background: rgba(245,158,11,0.15); color: #f59e0b; }
+.tipo-perdida            { background: rgba(168,85,247,0.15); color: #a855f7; }
+
+.badge-tipo-sustraccion {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+/* Estado badges */
+.est-reportado       { background: rgba(239,68,68,0.15);  color: #ef4444; }
+.est-en_investigacion { background: rgba(245,158,11,0.15); color: #f59e0b; }
+.est-resuelto        { background: rgba(16,185,129,0.15); color: #10b981; }
+
+.badge-estado-sustraccion {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.btn-investigar {
+  padding: 5px 12px;
+  background: rgba(245,158,11,0.12);
+  color: var(--color-warning);
+  border: 1px solid rgba(245,158,11,0.3);
+  border-radius: 6px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.btn-investigar:hover {
+  background: var(--color-warning);
+  color: #0a0f1e;
+  border-color: var(--color-warning);
+}
+
+.btn-resolver {
+  padding: 5px 12px;
+  background: var(--color-success-bg);
+  color: var(--color-success);
+  border: 1px solid rgba(16,185,129,0.3);
+  border-radius: 6px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.2s;
+  margin-left: 6px;
+  white-space: nowrap;
+}
+
+.btn-resolver:hover {
+  background: var(--color-success);
+  color: #fff;
+  border-color: var(--color-success);
+}
+
+.actions-cell {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}

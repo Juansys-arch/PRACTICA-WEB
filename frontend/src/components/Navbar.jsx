@@ -1,5 +1,6 @@
 import { NavLink, useNavigate, useLocation } from "react-router-dom";
 import { logout } from '@services/auth.service.js';
+import NotificacionesDropdown from './Notificaciones.jsx';
 import '@styles/navbar.css';
 import { useState } from "react";
 
@@ -75,7 +76,7 @@ const Navbar = () => {
                     </li>
                     )}
 
-                    {(userRole === 'administrador' || userRole === 'encargado_inventario' || userRole === 'jefe_cuadrilla') && (
+                    {(userRole === 'administrador' || userRole === 'profesor_practica' || userRole === 'reparador') && (
                     <li>
                         <NavLink 
                             to="/gestion-operativa" 
@@ -89,17 +90,8 @@ const Navbar = () => {
                         </NavLink>
                     </li>
                     )}
-                    <li>
-                        <NavLink 
-                            to="/notificaciones" 
-                            onClick={() => { 
-                                setMenuOpen(false); 
-                                addActiveClass();
-                            }} 
-                            activeClassName="active"
-                        >
-                            Notificaciones
-                        </NavLink>
+                    <li style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                        <NotificacionesDropdown userRole={userRole} />
                     </li>
 
                     <li>

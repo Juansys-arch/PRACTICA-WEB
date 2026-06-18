@@ -2,72 +2,54 @@
 import { Router } from "express";
 import { authenticateJwt } from "../middlewares/authentication.middleware.js";
 import { isAuthorized } from "../middlewares/authorization.middleware.js";
-import {crearMaterial,obtenerMateriales,obtenerMaterialPorId,actualizarMaterial,registrarMovimiento,obtenerMovimientos,solicitarMaterial, obtenerSolicitudes, obtenerMisSolicitudes, actualizarEstadoSolicitud } from "../controllers/inventario.controller.js"; 
+import {
+  crearMaterial,
+  obtenerMateriales,
+  obtenerMaterialPorId,
+  actualizarMaterial,
+  registrarMovimiento,
+  obtenerMovimientos,
+} from "../controllers/inventario.controller.js";
+
 const router = Router();
-
 router.use(authenticateJwt);
- 
 
+// Gestión de materiales del laboratorio
 router.post(
   "/materiales",
-  isAuthorized(["encargado_inventario", "administrador"]),
+  isAuthorized(["administrador", "profesor_practica"]),
   crearMaterial
 );
- 
+
 router.get(
   "/materiales",
-  isAuthorized(["encargado_inventario", "administrador", "jefe_cuadrilla"]),
+  isAuthorized(["administrador", "profesor_practica", "reparador"]),
   obtenerMateriales
 );
 
-router.get("/materiales/:id",
-  isAuthorized(["encargado_inventario", "administrador", "jefe_cuadrilla"]),
+router.get(
+  "/materiales/:id",
+  isAuthorized(["administrador", "profesor_practica", "reparador"]),
   obtenerMaterialPorId
 );
 
 router.patch(
   "/materiales/:id",
-  isAuthorized(["encargado_inventario", "administrador"]),
+  isAuthorized(["administrador", "profesor_practica"]),
   actualizarMaterial
 );
-//movimientos
+
+// Movimientos de stock (entradas/salidas)
 router.post(
   "/movimientos",
-  isAuthorized(["encargado_inventario", "administrador"]),
+  isAuthorized(["administrador", "profesor_practica"]),
   registrarMovimiento
 );
 
 router.get(
   "/movimientos",
-  isAuthorized(["encargado_inventario", "administrador"]),
+  isAuthorized(["administrador", "profesor_practica"]),
   obtenerMovimientos
 );
-///solicitudes
-router.post(
-  "/solicitudes",
-  isAuthorized(["jefe_cuadrilla"]),
-  solicitarMaterial
-);
-
-router.get(
-  "/solicitudes",
-  isAuthorized(["encargado_inventario", "administrador"]),
-  obtenerSolicitudes
-);
-
-router.get(
-  "/solicitudes/mis",
-  isAuthorized(["jefe_cuadrilla", "administrador"]),
-  obtenerMisSolicitudes
-);
-
-router.patch(
-  "/solicitudes/:id/estado",
-  isAuthorized(["encargado_inventario", "administrador"]),
-  actualizarEstadoSolicitud
-);
-
-
 
 export default router;
- 
