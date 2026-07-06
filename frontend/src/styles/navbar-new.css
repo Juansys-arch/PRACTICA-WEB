@@ -270,11 +270,6 @@
   background: rgba(239, 68, 68, 0.1);
 }
 
-/* Adjust main content for sidebar */
-:root {
-  --sidebar-width: 200px;
-}
-
 /* Scrollbar styling */
 .sidebar-menu::-webkit-scrollbar {
   width: 6px;
@@ -349,5 +344,3 @@
     display: none;
   }
 }
-
-

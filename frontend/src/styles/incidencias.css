@@ -4,13 +4,13 @@
 .gestion-operativa-page {
   min-height: 100vh;
   background: var(--bg-primary);
-  padding-top: 64px;
+  padding: 32px 24px;
 }
 
 .gestion-header {
   max-width: 1300px;
   margin: 0 auto;
-  padding: 32px 24px 0;
+  padding: 24px 16px 0;
 }
 
 .gestion-header h1 {
@@ -33,12 +33,12 @@
 
 .gestion-tab-bar {
   display: flex;
+  flex-direction: column;
   gap: 4px;
   background: var(--bg-secondary);
   padding: 4px;
   border-radius: var(--radius-md);
   border: 1px solid var(--border-subtle);
-  flex-wrap: wrap;
   width: fit-content;
   margin-top: 16px;
 }
@@ -46,7 +46,7 @@
 .gestion-content {
   max-width: 1300px;
   margin: 0 auto;
-  padding: 24px;
+  padding: 16px;
 }
 
 /* ============================================

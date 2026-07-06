@@ -77,6 +77,19 @@ html, body {
   color: var(--text-primary);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  margin-left: 200px;
+  transition: margin-left 0.3s ease;
+}
+
+html[data-sidebar-open="false"] body,
+body[data-sidebar-open="false"] {
+  margin-left: 70px;
+}
+
+@media (max-width: 768px) {
+  html, body {
+    margin-left: 0;
+  }
 }
 
 #root {
@@ -88,9 +101,15 @@ html, body {
    SHARED UTILITY CLASSES
    ============================================ */
 .page-container {
-  padding-top: 72px;
+  padding: 32px;
   min-height: 100vh;
   background: var(--bg-primary);
+}
+
+@media (max-width: 768px) {
+  .page-container {
+    padding: 16px;
+  }
 }
 
 .section-header {
